@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رزرو مشاوره تحصیلی | پارسا پژوهی فرد</title>
+<script>
+  (function(){var t=null;try{t=localStorage.getItem('theme');}catch(e){}
+  if(!t){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}
+  document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--blue-900:#0b3d8c;--blue-700:#1957c7;--blue-500:#3b7ce0;--blue-100:#e6f0ff;--cream:#f9f1e2;--paper:#f2e9d6;--surface:#fff;--ink:#0c1b33;--ink-soft:#4a5a75;--line:#e3d7ba;--heading:#0b3d8c;--link:#1957c7;--dot:rgba(25,87,199,.09);--header-bg:rgba(249,241,226,.9);--err:#c0392b;color-scheme:light;}
+  :root[data-theme="dark"]{--blue-500:#4f8ef0;--blue-100:#17294d;--cream:#0e1627;--paper:#15213a;--surface:#1a2742;--ink:#e8eefb;--ink-soft:#a9b6d0;--line:#2a3a5c;--heading:#dbe7ff;--link:#7db0ff;--dot:rgba(125,176,255,.10);--header-bg:rgba(14,22,39,.88);--err:#e06c5f;color-scheme:dark;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Vazirmatn',sans-serif;background:radial-gradient(circle,var(--dot) 1.4px,transparent 1.6px) 0 0/26px 26px,var(--cream);color:var(--ink);line-height:1.8;}
+  header{position:sticky;top:0;z-index:5;background:var(--header-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:1040px;margin:0 auto;padding:14px 24px;}
+  .brand{font-weight:800;color:var(--heading);}
+  .back{color:var(--link);text-decoration:none;font-size:.92rem;font-weight:600;}
+  .theme-toggle{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--heading);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .theme-toggle svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+  .icon-sun{display:none;}
+  :root[data-theme="dark"] .icon-sun{display:block;}
+  :root[data-theme="dark"] .icon-moon{display:none;}
+  main{max-width:1040px;margin:0 auto;padding:48px 24px 72px;}
+  h1{margin:0 0 10px;font-size:2rem;font-weight:800;color:var(--heading);}
+  .lead{margin:0 0 36px;color:var(--ink-soft);max-width:620px;}
+  .grid{display:grid;grid-template-columns:1.5fr .8fr;gap:32px;align-items:start;}
+  .step{margin-bottom:30px;}
+  .step h2{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:1.1rem;color:var(--heading);}
+  .num{width:28px;height:28px;border-radius:50%;background:var(--blue-700);color:#fff;font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px var(--blue-100);}
+  .opts{display:flex;flex-wrap:wrap;gap:10px;}
+  .opt{font:inherit;cursor:pointer;padding:10px 16px;border-radius:12px;border:1.4px solid var(--line);background:var(--surface);color:var(--ink);text-align:center;line-height:1.5;}
+  .opt small{display:block;color:var(--ink-soft);font-size:.78rem;}
+  .opt:hover:not(:disabled){border-color:var(--blue-500);}
+  .opt[aria-pressed="true"]{background:var(--blue-700);border-color:var(--blue-700);color:#fff;}
+  .opt[aria-pressed="true"] small{color:#dbe7ff;}
+  .opt:disabled{opacity:.4;cursor:not-allowed;}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .fields .full{grid-column:1/-1;}
+  label{display:block;font-size:.88rem;color:var(--ink-soft);margin-bottom:4px;}
+  input,select,textarea{width:100%;font:inherit;padding:11px 14px;border-radius:10px;border:1.4px solid var(--line);background:var(--surface);color:var(--ink);}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue-500);}
+  textarea{min-height:84px;resize:vertical;}
+  .err{color:var(--err);font-size:.85rem;margin:10px 0 0;min-height:1.3em;}
+  .btn{display:inline-block;font:inherit;font-weight:600;cursor:pointer;padding:13px 24px;border-radius:10px;border:1px solid var(--blue-700);background:var(--blue-700);color:#fff;text-decoration:none;text-align:center;}
+  .btn.alt{background:transparent;color:var(--link);border-color:var(--blue-500);}
+  .summary,.result{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 16px 32px -26px rgba(11,61,140,.45);}
+  .summary{position:sticky;top:84px;}
+  .summary h3,.result h2{margin:0 0 12px;color:var(--heading);font-size:1.05rem;}
+  .summary p{margin:0 0 6px;color:var(--ink-soft);font-size:.92rem;}
+  .summary strong{color:var(--heading);}
+  .msg{white-space:pre-wrap;background:var(--paper);border:1px dashed var(--line);border-radius:12px;padding:14px;font:inherit;font-size:.92rem;margin:0 0 16px;}
+  .send{display:flex;flex-wrap:wrap;gap:10px;}
+  .note{margin:16px 0 0;font-size:.86rem;color:var(--ink-soft);}
+  .plans .opt{flex:1 1 150px;}
+  [hidden]{display:none !important;}
+  @media (max-width:760px){.grid{grid-template-columns:1fr;}.fields{grid-template-columns:1fr;}.summary{position:static;order:-1;}h1{font-size:1.6rem;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <span class="brand">پارسا پژوهی فرد</span>
+    <a class="back" href="./">بازگشت به سایت</a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="تغییر حالت شب و روز" title="تغییر حالت شب و روز">
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <h1>رزرو وقت مشاوره تحصیلی</h1>
+  <p class="lead">اول پلن مناسبت رو انتخاب کن، بعد (اگه پلنت جلسه داره) روز و ساعت رو مشخص کن، اطلاعاتت رو بنویس و درخواستت رو برای من بفرست. رزرو بعد از تأیید من قطعی می‌شه.</p>
+
+  <div class="grid">
+    <div>
+      <form id="form" novalidate>
+        <div class="step">
+          <h2><span class="num">۱</span>انتخاب پلن</h2>
+          <div class="opts plans" id="plans"></div>
+          <p class="note" id="planDesc"></p>
+        </div>
+        <div id="when" hidden>
+          <div class="step">
+            <h2><span class="num">۲</span>انتخاب روز</h2>
+            <div class="opts" id="days"></div>
+          </div>
+          <div class="step">
+            <h2><span class="num">۳</span>انتخاب ساعت</h2>
+            <div class="opts" id="slots"></div>
+          </div>
+        </div>
+        <div class="step">
+          <h2><span class="num">۴</span>اطلاعات شما</h2>
+          <div class="fields">
+            <div><label for="name">نام و نام خانوادگی</label><input id="name" autocomplete="name"></div>
+            <div><label for="phone">شماره تماس</label><input id="phone" inputmode="tel" placeholder="09xxxxxxxxx" dir="ltr" style="text-align:right"></div>
+            <div><label for="grade">پایه تحصیلی</label>
+              <select id="grade"><option>نهم</option><option>دهم</option><option>یازدهم</option><option selected>دوازدهم</option><option>فارغ‌التحصیل</option></select></div>
+            <div><label for="field">رشته</label>
+              <select id="field"><option>ریاضی</option><option>تجربی</option><option>انسانی</option><option>سایر</option></select></div>
+            <div class="full"><label for="topic">موضوع مشاوره</label>
+              <select id="topic"><option>برنامه‌ریزی درسی</option><option>انتخاب رشته</option><option>مدیریت استرس و انگیزه</option><option>تجربه‌ی کنکور</option><option>سایر</option></select></div>
+            <div class="full"><label for="note" id="noteLbl">توضیحات (اختیاری)</label><textarea id="note"></textarea></div>
+          </div>
+        </div>
+        <button type="submit" class="btn">آماده‌سازی درخواست رزرو</button>
+        <p class="err" id="err" role="alert"></p>
+      </form>
+
+      <section class="result" id="result" hidden>
+        <h2>درخواستت آماده‌ست</h2>
+        <pre class="msg" id="msg"></pre>
+        <div class="send">
+          <a class="btn" id="sendWa" target="_blank" rel="noopener">ارسال در واتساپ</a>
+          <a class="btn alt" id="sendTg" target="_blank" rel="noopener">ارسال در تلگرام</a>
+          <a class="btn alt" id="sendMail">ارسال با ایمیل</a>
+          <button type="button" class="btn alt" id="copy">کپی متن</button>
+        </div>
+        <p class="note">با یکی از این راه‌ها متن بالا رو برای من بفرست. در تلگرام، متن خودکار کپی می‌شه و فقط کافیه توی چت پیست کنی. وقتی تأیید کردم، وقت رزرو قطعی می‌شه.</p>
+      </section>
+    </div>
+
+    <aside class="summary">
+      <h3>خلاصه‌ی رزرو</h3>
+      <p>پلن: <strong id="sPlan">هنوز انتخاب نشده</strong></p>
+      <p>روز: <strong id="sDay">هنوز انتخاب نشده</strong></p>
+      <p>ساعت: <strong id="sSlot">هنوز انتخاب نشده</strong></p>
+    </aside>
+  </div>
+</main>
+
+<script>
+  // ---- تنظیمات: روزها و ساعت‌های آزاد خودت رو این‌جا عوض کن ----
+  var CFG={
+    days:7,                              // چند روز آینده نمایش داده بشه
+    off:[5],                             // روزهای تعطیل (۵ = جمعه، ۶ = شنبه، ۰ = یکشنبه ...)
+    slots:["16:00","17:00","18:00","20:00"],
+    wa:"989360454053", email:"pazhoohifardparsa@gmail.com", tg:"https://t.me/+989222612642"
+  };
+
+  var P='۰۱۲۳۴۵۶۷۸۹';
+  function fa(s){return String(s).replace(/\d/g,function(d){return P[d];});}
+  function en(s){return String(s).replace(/[۰-۹]/g,function(d){return P.indexOf(d);});}
+  var fmtDay=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{weekday:'long'});
+  var fmtDate=new Intl.DateTimeFormat('fa-IR-u-ca-persian',{day:'numeric',month:'long'});
+  var PLANS=[
+    {id:'simple',name:'Simple',price:'۲ میلیون تومان',when:false,desc:'روزی یک سوال، فقط از طریق پیام. زمان خیلی محدوده و ممکنه همیشه در دسترس نباشم. این پلن روز و ساعت مشخص نداره.'},
+    {id:'intermediate',name:'Intermediate',price:'۳ میلیون تومان',when:true,desc:'علاوه بر پیام، مکالمه‌ی تلفنی هم داریم، ولی در حد عادی و محدود.'},
+    {id:'pro',name:'Pro',price:'۵ میلیون تومان',when:true,desc:'زمان خیلی بیشتری برای گفت‌وگو می‌ذارم و یک برنامه‌ی تحصیلی ماهانه هم می‌گیری.'},
+    {id:'promax',name:'Pro Max',price:'۱۰ میلیون تومان',when:true,desc:'فول آپشن: برنامه‌ی متناسب با وضعیت تحصیلی، توجه به نقاط قوتت و امکان جلسه‌ی حضوری.'}
+  ];
+  var state={plan:null,date:null,slot:null,text:''};
+  var $=function(id){return document.getElementById(id);};
+
+  var list=[],d=new Date();d.setHours(0,0,0,0);
+  while(list.length<CFG.days){ if(CFG.off.indexOf(d.getDay())<0) list.push(new Date(d)); d.setDate(d.getDate()+1); }
+
+  function mk(parent,label,sub,onClick){
+    var b=document.createElement('button');b.type='button';b.className='opt';b.setAttribute('aria-pressed','false');
+    b.append(label);
+    if(sub){var s=document.createElement('small');s.textContent=sub;b.append(s);}
+    b.addEventListener('click',onClick);parent.append(b);return b;
+  }
+
+  var dayBtns=list.map(function(date,i){
+    return mk($('days'),fmtDay.format(date),fmtDate.format(date),function(){
+      state.date=date;state.slot=null;
+      dayBtns.forEach(function(x,j){x.setAttribute('aria-pressed',String(j===i));});
+      renderSlots();update();
+    });
+  });
+
+  var slotBtns=[];
+  function renderSlots(){
+    $('slots').textContent='';slotBtns=[];
+    if(!state.date){var p=document.createElement('p');p.className='note';p.textContent='اول یک روز انتخاب کن.';$('slots').append(p);return;}
+    var now=new Date(),today=state.date.toDateString()===now.toDateString();
+    CFG.slots.forEach(function(t){
+      var hm=t.split(':'),past=today&&(+hm[0]*60+ +hm[1])<=now.getHours()*60+now.getMinutes();
+      var b=mk($('slots'),fa(t),null,function(){
+        state.slot=t;slotBtns.forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});update();
+      });
+      b.disabled=past;slotBtns.push(b);
+    });
+  }
+  function update(){
+    $('sPlan').textContent=state.plan?state.plan.name+' — '+state.plan.price:'هنوز انتخاب نشده';
+    if(state.plan&&!state.plan.when){$('sDay').textContent='بدون زمان‌بندی (پیام)';$('sSlot').textContent='—';return;}
+    $('sDay').textContent=state.date?fmtDay.format(state.date)+' '+fmtDate.format(state.date):'هنوز انتخاب نشده';
+    $('sSlot').textContent=state.slot?fa(state.slot):'هنوز انتخاب نشده';
+  }
+  renderSlots();
+
+  var planBtns=PLANS.map(function(pl){
+    return mk($('plans'),pl.name,pl.price,function(){selectPlan(pl.id);});
+  });
+  function selectPlan(id){
+    state.plan=PLANS.filter(function(x){return x.id===id;})[0];
+    planBtns.forEach(function(b,i){b.setAttribute('aria-pressed',String(PLANS[i].id===id));});
+    $('planDesc').textContent=state.plan.desc;
+    $('when').hidden=!state.plan.when;
+    $('noteLbl').textContent=state.plan.when?'توضیحات (اختیاری)':'سوالت رو بنویس';
+    update();
+  }
+  var q0=new URLSearchParams(location.search).get('plan');
+  if(q0&&PLANS.some(function(x){return x.id===q0;})) selectPlan(q0);
+
+  $('form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=$('name').value.trim(),phone=en($('phone').value.replace(/\s|-/g,''));
+    var need=state.plan&&state.plan.when;
+    var msg=!state.plan?'اول یک پلن انتخاب کن.':(need&&!state.date)?'یک روز انتخاب کن.':(need&&!state.slot)?'یک ساعت انتخاب کن.':!name?'نام و نام خانوادگی رو بنویس.':!/^09\d{9}$/.test(phone)?'شماره تماس رو درست (مثلاً 09123456789) وارد کن.':'';
+    $('err').textContent=msg;if(msg)return;
+    var note=$('note').value.trim();
+    var lines=[need?'سلام پارسا جان، می‌خوام وقت مشاوره تحصیلی رزرو کنم.':'سلام پارسا جان، می‌خوام مشاوره‌ی پیامی (پلن Simple) رو فعال کنم.','',
+      'پلن: '+state.plan.name+' ('+state.plan.price+')'];
+    if(need) lines.push('روز: '+fmtDay.format(state.date)+' '+fmtDate.format(state.date),'ساعت: '+fa(state.slot));
+    lines.push('نام: '+name,'شماره تماس: '+phone,'پایه: '+$('grade').value+' | رشته: '+$('field').value,'موضوع: '+$('topic').value);
+    if(note) lines.push((need?'توضیحات: ':'سوال: ')+note);
+    state.text=lines.join('\n');
+    $('msg').textContent=state.text;
+    var q=encodeURIComponent(state.text);
+    $('sendWa').href='https://wa.me/'+CFG.wa+'?text='+q;
+    $('sendMail').href='mailto:'+CFG.email+'?subject='+encodeURIComponent('درخواست رزرو مشاوره')+'&body='+q;
+    $('sendTg').href=CFG.tg;
+    $('form').hidden=true;$('result').hidden=false;$('result').scrollIntoView({behavior:'smooth'});
+  });
+
+  function copyText(){ return navigator.clipboard?navigator.clipboard.writeText(state.text):Promise.reject(); }
+  $('sendTg').addEventListener('click',function(){copyText().catch(function(){});});
+  $('copy').addEventListener('click',function(){
+    var b=this;copyText().then(function(){b.textContent='کپی شد!';setTimeout(function(){b.textContent='کپی متن';},1500);}).catch(function(){b.textContent='کپی نشد؛ متن رو دستی انتخاب کن';});
+  });
+
+  $('themeToggle').addEventListener('click',function(){
+    var r=document.documentElement,n=r.getAttribute('data-theme')==='dark'?'light':'dark';
+    r.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(e){}
+  });
+</script>
+</body>
+</html>
